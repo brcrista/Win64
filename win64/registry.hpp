@@ -86,9 +86,18 @@ namespace windows
                 transaction.get(),
                 nullptr);
 
-            if (status == ERROR_FILE_NOT_FOUND) return boost::none;
-            else if (status != ERROR_SUCCESS) throw win32_exception{ status };
-            else return unique_key{ result };
+            if (status == ERROR_FILE_NOT_FOUND)
+            {
+                return boost::none;
+            }
+            else if (status != ERROR_SUCCESS)
+            {
+                throw win32_exception{ status };
+            }
+            else
+            {
+                return unique_key{ result };
+            }
         }
 
         //! Set the value `value_name` under key `key` to `value_data`, or set the default value if the value is not given.
@@ -111,8 +120,14 @@ namespace windows
             const auto key = registry::open_key(parent, path, access_rights, transaction);
 
             // We are deleting keys, so if the key does not exist it is not an error.
-            if (!key) return;
-            else throw_if_failed(::RegDeleteTree(key->get(), nullptr));
+            if (!key)
+            {
+                return;
+            }
+            else
+            {
+                throw_if_failed(::RegDeleteTree(key->get(), nullptr));
+            }
         }
     }
 }
