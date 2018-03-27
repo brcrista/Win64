@@ -124,7 +124,7 @@ namespace windows
         static std::wstring error_message(Error error)
         {
             const auto hr = HRESULT_FROM_WIN32(error);
-            return hresult_to_string(hr) + L": " + system_error_message(hr);
+            return hresult_to_wstring(hr) + L": " + system_error_message(hr);
         }
     };
 

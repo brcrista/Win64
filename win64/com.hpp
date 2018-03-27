@@ -2,13 +2,12 @@
 
 #include <array>
 #include <functional>
+#include <optional>
 #include <vector>
-
-#include <boost\optional.hpp>
 
 #include <wrl.h>
 
-#include "Core\log.hpp"
+#include "Core\log.hpp" // TODO from Essentials of COM 2 solution
 
 #include "error.hpp"
 #include "registry.hpp"
@@ -45,8 +44,8 @@ namespace windows
             {
                 windows::path path;
                 bool delete_on_unregister;
-                boost::optional<std::wstring> name; //!< Default keys in the registry do not have names.
-                boost::optional<std::wstring> value; //!< COM doesn't need this, just for humans
+                std::optional<std::wstring> name; //!< Default keys in the registry do not have names.
+                std::optional<std::wstring> value; //!< COM doesn't need this, just for humans
             };
 
             //! Handles registration and unregistration for the DLL.
@@ -96,7 +95,7 @@ namespace windows
                     {
                         const auto key = windows::registry::create_key(hive, entry.path, KEY_WRITE, transaction);
 
-                        if (entry.value != boost::none)
+                        if (entry.value)
                         {
                             windows::registry::set_value_string(key.get(), entry.name, *entry.value);
                         }

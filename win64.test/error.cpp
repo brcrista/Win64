@@ -14,10 +14,10 @@ do \
     Assert::AreEqual(wstring{ str }, result); \
 } while (false)
 
-#define TEST_HRESULT(err, str) TEST(hresult_to_string, err, str)
+#define TEST_HRESULT(err, str) TEST(hresult_to_wstring, err, str)
 #define TEST_WIN32(err, str) TEST(system_error_message, err, str)
 
-TEST_CLASS(hresult_to_string_test)
+TEST_CLASS(hresult_to_wstring_test)
 {
 public:
 

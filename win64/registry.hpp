@@ -1,7 +1,8 @@
 #pragma once
 
+#include <optional>
+
 #include <winreg.h>
-#include <boost\optional.hpp>
 
 #include "handle.hpp"
 #include "ktm.hpp"
@@ -73,7 +74,7 @@ namespace windows
         //! Wraps a call to `RegOpenKeyTransacted`.
         //! Returns `nullopt` if the key does not exist.
         //! Throws `hresult_exception` on any other error.
-        inline boost::optional<unique_key> open_key(hive parent, const windows::path& path, REGSAM access_rights, const windows::ktm::transaction& transaction)
+        inline std::optional<unique_key> open_key(hive parent, const windows::path& path, REGSAM access_rights, const windows::ktm::transaction& transaction)
         {
             HKEY result;
 
@@ -88,7 +89,7 @@ namespace windows
 
             if (status == ERROR_FILE_NOT_FOUND)
             {
-                return boost::none;
+                return std::nullopt;
             }
             else if (status != ERROR_SUCCESS)
             {
@@ -102,7 +103,7 @@ namespace windows
 
         //! Set the value `value_name` under key `key` to `value_data`, or set the default value if the value is not given.
         //! Wraps a call to `RegSetValueEx`.
-        inline void set_value_string(HKEY key, const boost::optional<std::wstring>& value_name, const std::wstring& value_data)
+        inline void set_value_string(HKEY key, const std::optional<std::wstring>& value_name, const std::wstring& value_data)
         {
             windows::throw_if_failed(::RegSetValueEx(
                 key,
