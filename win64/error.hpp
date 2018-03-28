@@ -95,18 +95,18 @@ namespace windows
     //! The constructors perform a dynamic string allocation and so can cause a second exception
     //! to be thrown while this one is being constructed if the system is out of memory.
     //! That condition is assumed to be sufficiently rare that it may be ignored.
-    class win32_exception : public wexception
+    class win32_wexception : public wexception
     {
     public:
         // `HRESULT` and `LSTATUS`
-        win32_exception(long error_code) :
+        win32_wexception(long error_code) :
             wexception{ error_message(hr) },
             hr{ HRESULT_FROM_WIN32(error_code) } // if `error_code` is already an `HRESULT`, this will leave it unchanged
         {
         }
 
         // Separate `DWORD` constructor to avoid C++11's "narrowing conversion" error
-        win32_exception(DWORD error_code) :
+        win32_wexception(DWORD error_code) :
             wexception{ error_message(hr) },
             hr{ HRESULT_FROM_WIN32(error_code) }
         {
@@ -130,21 +130,21 @@ namespace windows
         }
     };
 
-    //! Test an `HRESULT`, `LSTATUS`, or Win32 error code for failure and throw a `win32_exception` if it failed.
+    //! Test an `HRESULT`, `LSTATUS`, or Win32 error code for failure and throw a `win32_wexception` if it failed.
     inline void throw_if_failed(long error_code)
     {
         if (HRESULT_FROM_WIN32(error_code) != S_OK)
         {
-            throw win32_exception{ error_code };
+            throw win32_wexception{ error_code };
         }
     }
 
-    //! Test a `BOOL` for failure and throw `GetLastError` as a `win32_exception` if it failed.
+    //! Test a `BOOL` for failure and throw `GetLastError` as a `win32_wexception` if it failed.
     inline void throw_if_failed(BOOL success)
     {
         if (!success)
         {
-            throw win32_exception{ ::GetLastError() };
+            throw win32_wexception{ ::GetLastError() };
         }
     }
 }

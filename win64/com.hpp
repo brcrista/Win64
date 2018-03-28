@@ -115,7 +115,7 @@ namespace windows
                     function();
                     return S_OK;
                 }
-                catch (const win32_exception& e)
+                catch (const win32_wexception& e)
                 {
                     LOG_ERROR(e.message());
                     return e.hresult();

@@ -93,7 +93,7 @@ namespace windows
             }
             else if (status != ERROR_SUCCESS)
             {
-                throw win32_exception{ status };
+                throw win32_wexception{ status };
             }
             else
             {

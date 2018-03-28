@@ -30,7 +30,7 @@ namespace windows
             }
             else
             {
-                throw windows::win32_exception{ ::GetLastError() };
+                throw windows::win32_wexception{ ::GetLastError() };
             }
         }
 
@@ -58,7 +58,7 @@ namespace windows
             }
             else
             {
-                throw windows::win32_exception{ ::GetLastError() };
+                throw windows::win32_wexception{ ::GetLastError() };
             }
         }
     }

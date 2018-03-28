@@ -21,7 +21,7 @@ namespace windows
                 const auto handle = ::CreateTransaction(nullptr, nullptr, TRANSACTION_DO_NOT_PROMOTE, 0, 0, INFINITE, nullptr);
                 if (handle == INVALID_HANDLE_VALUE)
                 {
-                    throw windows::win32_exception{ ::GetLastError() };
+                    throw windows::win32_wexception{ ::GetLastError() };
                 }
                 else
                 {
