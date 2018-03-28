@@ -1,13 +1,16 @@
 #pragma once
 
 #include <array>
+#include <string>
+
 #include <Windows.h>
 #include <winerror.h>
 
 namespace windows
 {
-    //! Get the name of the `HRESULT` (for example, `S_OK`) as a string
-    //! or convert the numerical value to a string if the name is not specified.
+    //! Get the name of a common `HRESULT` (for example, `S_OK`) as a string
+    //! or convert the numerical value to a string if the name is unknown.
+    //! This method should only be used for diagnostics and not for error-checking.
     inline std::wstring hresult_to_wstring(HRESULT hr)
     {
         switch (hr)
@@ -78,11 +81,10 @@ namespace windows
         }
 
     public:
-        virtual const wchar_t* message() const noexcept
+        virtual const wchar_t* what() const noexcept
         {
             return _message.c_str();
         }
-
 
     private:
         std::wstring _message;
